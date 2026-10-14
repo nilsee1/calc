@@ -13,24 +13,27 @@ Ein schlanker Web-Taschenrechner in Go – Single Binary mit eingebettetem Front
 
 ## Schnellstart
 
-### Mit Go
+### Mit Docker Compose (empfohlen)
+
+Image von der Codeberg Container Registry pullen und starten:
 
 ```bash
-go run .
+docker compose pull
+docker compose up -d
 # → http://localhost:8080
 ```
 
-### Mit Docker
+### Mit Docker (manuell)
 
 ```bash
-docker build -t taxi-calculator .
-docker run -p 8080:8080 taxi-calculator
+docker pull codeberg.org/nilsee/calc:latest
+docker run -p 8080:8080 codeberg.org/nilsee/calc:latest
 ```
 
-### Mit Docker Compose
+### Mit Go (Entwicklung)
 
 ```bash
-docker compose up --build
+go run .
 # → http://localhost:8080
 ```
 
@@ -39,6 +42,25 @@ docker compose up --build
 ```bash
 go test ./... -v
 ```
+
+## Image bauen & pushen (Maintainer)
+
+Bei Codeberg einloggen, Image bauen und in die Registry pushen:
+
+```bash
+# 1. Bei der Codeberg Container Registry anmelden
+docker login codeberg.org
+
+# 2. Image bauen
+docker build -t codeberg.org/nilsee/calc:latest .
+
+# 3. Image pushen
+docker push codeberg.org/nilsee/calc:latest
+```
+
+> **Tipp:** Als Passwort beim `docker login` ein
+> [Access Token](https://codeberg.org/user/settings/applications)
+> mit `package:write`-Berechtigung verwenden.
 
 ## API
 
@@ -85,7 +107,7 @@ Gibt `200 OK` zurück – für Docker Healthchecks.
 │   ├── style.css        # Styling
 │   └── app.js           # Frontend-Logik
 ├── Dockerfile           # Multi-Stage Build
-├── docker-compose.yml   # Compose-Konfiguration
+├── docker-compose.yml   # Compose-Konfiguration (pull von Registry)
 ├── go.mod               # Go-Modul
 └── README.md
 ```
@@ -93,4 +115,3 @@ Gibt `200 OK` zurück – für Docker Healthchecks.
 ## Lizenz
 
 MIT
-
