@@ -1,4 +1,4 @@
-# 🚕 Taxi Calculator
+# Calculator
 
 Ein schlanker Web-Taschenrechner in Go – Single Binary mit eingebettetem Frontend.
 
