@@ -15,7 +15,7 @@ Ein schlanker Web-Taschenrechner in Go – Single Binary mit eingebettetem Front
 
 ### Mit Docker Compose (empfohlen)
 
-Image von der Codeberg Container Registry pullen und starten:
+Image von der GitHub Container Registry (GHCR) pullen und starten:
 
 ```bash
 docker compose pull
@@ -26,8 +26,8 @@ docker compose up -d
 ### Mit Docker (manuell)
 
 ```bash
-docker pull codeberg.org/nilsee/calc:latest
-docker run -p 8080:8080 codeberg.org/nilsee/calc:latest
+docker pull ghcr.io/nilsee1/calc:latest
+docker run -p 8080:8080 ghcr.io/nilsee1/calc:latest
 ```
 
 ### Mit Go (Entwicklung)
@@ -45,22 +45,20 @@ go test ./... -v
 
 ## Image bauen & pushen (Maintainer)
 
-Bei Codeberg einloggen, Image bauen und in die Registry pushen:
+Images werden automatisch via **GitHub Actions** bei jedem Push auf den `main`-Branch gebaut und in die GitHub Container Registry (GHCR) gepusht.
+
+Manuell bauen und pushen:
 
 ```bash
-# 1. Bei der Codeberg Container Registry anmelden
-docker login codeberg.org
+# 1. Bei GHCR anmelden (mit GitHub Personal Access Token mit write:packages Berechtigung)
+echo $GITHUB_TOKEN | docker login ghcr.io -u nilsee1 --password-stdin
 
 # 2. Image bauen
-docker build -t codeberg.org/nilsee/calc:latest .
+docker build -t ghcr.io/nilsee1/calc:latest .
 
 # 3. Image pushen
-docker push codeberg.org/nilsee/calc:latest
+docker push ghcr.io/nilsee1/calc:latest
 ```
-
-> **Tipp:** Als Passwort beim `docker login` ein
-> [Access Token](https://codeberg.org/user/settings/applications)
-> mit `package:write`-Berechtigung verwenden.
 
 ## API
 
